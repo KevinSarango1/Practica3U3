@@ -6,7 +6,7 @@ package Modelo;
 
 /**
  *
- * @author Kevin Sarango y Anderson Ambuludí
+ * @author Andersson Ambuludi y Kevin Sarango
  */
 public class Aeropuerto {
 
@@ -50,5 +50,4 @@ public class Aeropuerto {
     public String toString() {
         return nombre + "(" + codAeropuerto + ")";
     }
-
 }
