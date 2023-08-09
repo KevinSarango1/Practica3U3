@@ -132,39 +132,38 @@ public class GrafoAeropuerto {
         // Reconstruir el camino más corto
         ListaEnlazada<Aeropuerto> camino = reconstruirCamino(origen, destino, padres, caminoLista);
 
-    if (camino.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "No existe camino", "Información", JOptionPane.INFORMATION_MESSAGE);
-    } else {
-        StringBuilder mensaje = new StringBuilder();
-        mensaje.append("Camino más corto desde ").append(origen.getNombre()).append(" a ").append(destino.getNombre()).append(":\n");
-        
-        for (int i = 0; i < camino.size(); i++) {
-            mensaje.append(camino.get(i));
-            if (i < camino.size() - 1) {
-                mensaje.append(" -> ");
-            }
-        }
-        
-        JOptionPane.showMessageDialog(null, mensaje.toString(), "Camino más corto", JOptionPane.INFORMATION_MESSAGE);
-    }
+        if (camino.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No existe camino", "Información", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            StringBuilder mensaje = new StringBuilder();
+            mensaje.append("Camino más corto desde ").append(origen.getNombre()).append(" a ").append(destino.getNombre()).append(":\n");
 
-    return camino;
-}
+            for (int i = 0; i < camino.size(); i++) {
+                mensaje.append(camino.get(i));
+                if (i < camino.size() - 1) {
+                    mensaje.append(" -> ");
+                }
+            }
+
+            JOptionPane.showMessageDialog(null, mensaje.toString(), "Camino más corto", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        return camino;
+    }
 
     public ListaEnlazada<Aeropuerto> reconstruirCamino(Aeropuerto origen, Aeropuerto destino, Integer[] padres, ListaEnlazada<Aeropuerto> camino) throws VacioException, PosicionException {
-    Integer dest = grafo.getVerticeNum(destino); // Convierte el destino en su número de vértice
-    Integer act = grafo.getVerticeNum(origen); // Convierte el origen en su número de vértice
+        Integer dest = grafo.getVerticeNum(destino); // Convierte el destino en su número de vértice
+        Integer act = grafo.getVerticeNum(origen); // Convierte el origen en su número de vértice
 
-    while (dest != null && act != 0) {
-        camino.insertarInicio(grafo.getEtiqueta(dest)); // Agrega el aeropuerto al inicio del camino
-        dest = padres[dest];
+        while (dest != null && act != 0) {
+            camino.insertarInicio(grafo.getEtiqueta(dest)); // Agrega el aeropuerto al inicio del camino
+            dest = padres[dest];
+        }
+        if (act == 0) {
+            camino.deleteAll(); // No se encontró un camino válido
+        }
+        return camino;
     }
-    if (act == 0) {
-        camino.deleteAll(); // No se encontró un camino válido
-    }
-    return camino;
-}
-
 
     public ListaEnlazada<Aeropuerto> Floyd(Aeropuerto origen, Aeropuerto destino) throws GrafoSizeExeption, VacioException, PosicionException {
         ListaEnlazada<Aeropuerto> caminoLista = new ListaEnlazada<>();
@@ -214,25 +213,24 @@ public class GrafoAeropuerto {
         // Reconstruir el camino más corto como lista de aeropuertos
         ListaEnlazada<Aeropuerto> camino = reconstruirFloyd(origenNum, destinoNum, padres, caminoLista);
 
-    if (camino.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "No existe camino", "Información", JOptionPane.INFORMATION_MESSAGE);
-    } else {
-        StringBuilder mensaje = new StringBuilder();
-        mensaje.append("Camino más corto desde ").append(origen.getNombre()).append(" a ").append(destino.getNombre()).append(":\n");
-        
-        for (int i = 0; i < camino.size(); i++) {
-            mensaje.append(camino.get(i));
-            if (i < camino.size() - 1) {
-                mensaje.append(" -> ");
+        if (camino.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No existe camino", "Información", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            StringBuilder mensaje = new StringBuilder();
+            mensaje.append("Camino más corto desde ").append(origen.getNombre()).append(" a ").append(destino.getNombre()).append(":\n");
+
+            for (int i = 0; i < camino.size(); i++) {
+                mensaje.append(camino.get(i));
+                if (i < camino.size() - 1) {
+                    mensaje.append(" -> ");
+                }
             }
+
+            JOptionPane.showMessageDialog(null, mensaje.toString(), "Camino más corto", JOptionPane.INFORMATION_MESSAGE);
         }
-        
-        JOptionPane.showMessageDialog(null, mensaje.toString(), "Camino más corto", JOptionPane.INFORMATION_MESSAGE);
+
+        return camino;
     }
-
-    return camino;
-}
-
 
     private ListaEnlazada<Aeropuerto> reconstruirFloyd(int origen, int destino, Integer[][] padres, ListaEnlazada<Aeropuerto> camino) throws VacioException, PosicionException {
 
@@ -249,4 +247,5 @@ public class GrafoAeropuerto {
 
         return camino;
     }
+
 }
